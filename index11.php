@@ -4,8 +4,7 @@ $sid = session_id();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 	<meta charset=utf-8 />
 	<title>Online Bookstore</title>
@@ -116,137 +115,151 @@ $sid = session_id();
 	#search_container{
 		padding-bottom:20px;
 	}
-	
-	img{
-		margin: auto;
-	}
         
 	</style>
 </head>
-
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="http://alliancedev.xyz/AllianceDev/index.php">Online Bookstore</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-					<li>
-                        <a href="http://alliancedev.xyz/AllianceDev/login.php">Login</a>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+
+<div class="row">
+  <div class="col-xs-12 col-sm-8">
+      <table class="table table-striped">
+      <thead>
+      </thead>
+      <tbody>
+      </tbody>
+     </table>
+  </div>
+	<div class="col-xs-6 col-sm-4">
+		<div class="row" id="search_container">
+        <div class="span12">
+            <form id="custom-search-form" class="form-search form-horizontal pull-right">
+                <div class="input-append span12">
+                    <input type="text" class="search-query" placeholder="Search" id="search-keys">
+                    <button type="submit" class="btn" id="search-btn"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </form>
         </div>
-        <!-- /.container -->
-    </nav>
+	</div>
+	<div class="row">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<div class="row">
+							<div class="col-xs-6">
+								<h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
+							</div>
+							<div class="col-xs-6">
+								<button type="button" class="btn btn-primary btn-sm btn-block">
+									<span class="glyphicon glyphicon-share-alt"></span> Continue shopping
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body" >
+					<div id="cart-body">
+					</div>
 
-    <!-- Page Content -->
-    <div class="container">
+					<div class="row">
+						<div class="text-center">
+							<div class="col-xs-8">
+								<h6 class="text-right">Added items?</h6>
+							</div>
+							<div class="col-xs-4">
+								<button type="button" class="btn btn-default btn-sm btn-block" id="updateCart">
+									Update cart
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="row text-center">
+						<div class="col-xs-8">
+							<h4 class="text-right">Total $<span id="cart-total">0.00</span></h4>
+						</div>
+						<div class="col-xs-4">
+							<button type="button" class="btn btn-success btn-block">
+								Checkout
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+		
+</div>
 
-        <div class="row">
+<div class="row">
+  <div class="col-xs-12 col-sm-8"><center>
+      <ul id="pagination-demo" class="pagination-sm"></ul>
+      </center>
+</div>
 
-            <div class="col-md-2">
-                <p class="lead">Shop Name</p>
-                <div class="list-group">
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
-                </div>
-            </div>
-
-            <div class="col-md-9">
-
-                <div class="row carousel-holder">
-
-                    <div class="col-md-12">
-                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <img class="slide-image" src="./assets/1.jpg" alt="">
-                                </div>
-                                <div class="item">
-                                    <img class="slide-image" src="./assets/C.PNG" alt="">
-                                </div>
-                                <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                                </div>
-                            </div>
-                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-					<item>
-					</item>
-                </div>
-
-            </div>
-
+<div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-header">
+            <h1>Processing...</h1>
         </div>
-
-    </div>
-    <!-- /.container -->
-
-    <div class="container">
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
+        <div class="modal-body">
+            <div class="progress progress-striped active">
+                <div class="bar" style="width: 100%;"></div>
             </div>
-        </footer>
-
+        </div>
     </div>
-    <!-- /.container -->
+</div>
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-
-	
-	
-</body>
-
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			<h3 class="modal-title" id="lineModalLabel">Edit Product</h3>
+		</div>
+		<div class="modal-body">
+			
+            <!-- content goes here -->
+			<form id="productEditForm">
+              <div class="form-group">
+                <label for="pid">Id</label>
+                <input type="text" class="form-control" id="pid" placeholder="Product Id">
+              </div>
+              <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" class="form-control" id="category" placeholder="Category">
+              </div>
+              <div class="form-group">
+                <label for="desc">Description</label>
+                <input type="text" class="form-control" id="desc" placeholder="Description">
+              </div>
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" placeholder="$0.00">
+              </div>
+              <div class="form-group">
+                <label for="imgurl">Img Url</label>
+                <input type="text" class="form-control" id="imgurl" placeholder="Url">
+              </div>
+			  <input type="hidden" id="old_id" value="">
+            </form>
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+				</div>
+				<div class="btn-group btn-delete hidden" role="group">
+					<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
 <script>
 
 (function($) {
@@ -283,7 +296,7 @@ $sid = session_id();
     var total_records = 0;
     var total_pages = 0;
     var rows = "";
-    var item_box = "";
+    var col_head = "";
 
     /*
     products = {
@@ -324,45 +337,57 @@ $sid = session_id();
         // The '.done' method fires when the get request completes
         .done(function(data) {
         
-           //console.log(data);
-		   
+           // console.log(data);
+
+            // Pull the column names out of our json object 
+            var cols = data.products.columns;
+
+            // Start an html string with a row tag
+            col_head = "<tr>";
+            for (var i = 0; i < cols.length; i++) {
+
+                // Continuously append header tags to our row
+                col_head += "<th nowrap> " + cols[i] +"</th>";
+				
+            }
+
+            // Finish off our row with an empty header tag 
+            col_head = col_head + "<th style=\"width: 36px;\"></th></tr>";
+
             // Append our new html to this pages only 'thead' tag
-            $('item').html(item_box);
+            $('thead').html(col_head);
 
             // Pull the products out of our json object 
             var records = data.products.records;
 
             // Start an empty html string
-            item_box = "";
-            for (var i = 0; i < records.length; i++) 
-			{
-                //Start a new row for each product and put the product id in a data-element
-                item_box = item_box + '<div class="col-sm-4 col-lg-4 col-md-4">';
-				item_box = item_box + '<div class="thumbnail"><img src="' + records[i][6] + '" alt="">';
+            rows = "";
+            for (var i = 0; i < records.length; i++) {
 
-                item_box = item_box + '<div class="caption"><h4 class="pull-right">$' + records[i][3]+'</h4>';
-				item_box = item_box + '<h4><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'">' + records[i][1].substr(0,40) +'...</a></h4>';
-				
-				item_box = item_box + '<p>' + records[i][2].substr(0,100) + '...</a>.</p></div><div class="ratings">';
-				item_box = item_box + '<p class="pull-right">15 reviews</p><p>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span></p></div></div></div>';
+                //Start a new row for each product and put the product id in a data-element
+                rows = rows + "<tr data-id="+records[i][0]+" id=id"+records[i][0]+">";
+
+                // Loop through each item for a product and append a table data tag to our row
+                for (var j = 0; j < records[i].length; j++) {
+                
+                                
+                    // This is the last item in the record set so it's the img url.
+                    if(j == records[i].length-1){
+                        var result = records[i][j] .split(' ');
+                        var img = result[0].replace("~","25");
+                        records[i][j] = "<img src="+img+">";
+                    }
+                    rows = rows + "<td>" + records[i][j] + "</td>";
+                }
+                rows = rows + '<td style="vertical-align:middle" nowrap><i class="fa fa-shopping-cart" aria-hidden="true"></i></td>';
+                // Finish the row for a product
+                rows = rows + "</tr>";
             }
 
             // At this point "rows" should have 'page_size' number of items in it,
             // so append all those rows to the body of the table.
-            $('item').html(item_box);
+            $('tbody').html(rows);
             
-/*			
-			
-		
-		
-			
-
-*/		
             myWait.hide();
 			
 		
@@ -426,19 +451,19 @@ $sid = session_id();
             var cols = data.products.columns;
 
             // Start an html string with a row tag
-            item_box = "<tr>";
+            col_head = "<tr>";
             for (var i = 0; i < cols.length; i++) {
 
                 // Continuously append header tags to our row
-                item_box += "<th nowrap> " + cols[i] +"</th>";
+                col_head += "<th nowrap> " + cols[i] +"</th>";
 				
             }
 
             // Finish off our row with an empty header tag 
-            item_box = item_box + "<th style=\"width: 36px;\"></th></tr>";
+            col_head = col_head + "<th style=\"width: 36px;\"></th></tr>";
 
             // Append our new html to this pages only 'thead' tag
-            $('thead').html(item_box);
+            $('thead').html(col_head);
 
             // Pull the products out of our json object 
             var records = data.products.records;
@@ -535,5 +560,7 @@ $sid = session_id();
 
 }(jQuery));
 </script>
-
+</body>
 </html>
+
+
