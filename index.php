@@ -338,7 +338,7 @@ $sid = session_id();
 			{
                 //Start a new row for each product and put the product id in a data-element
                 item_box = item_box + '<div class="col-sm-4 col-lg-4 col-md-4">';
-				item_box = item_box + '<div class="thumbnail"><img src="' + records[i][6] + '" alt="">';
+				item_box = item_box + '<div class="thumbnail"><img src="' + records[i][6] + '250_.jpg" alt="">';
 
                 item_box = item_box + '<div class="caption"><h4 class="pull-right">$' + records[i][3]+'</h4>';
 				item_box = item_box + '<h4><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'">' + records[i][1].substr(0,40) +'...</a></h4>';
