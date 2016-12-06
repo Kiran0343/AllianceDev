@@ -75,51 +75,9 @@ body{ margin-top:20px; }
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top navbar-default" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="http://alliancedev.xyz/AllianceDev/index.php">Online Bookstore</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="http://alliancedev.xyz/AllianceDev/login.php">Login</a>
-                    </li>
-					<li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-				<ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> <cart-counter>0</cart-counter> - Items<span class="caret"></span></a>
-          <ul class="dropdown-menu dropdown-cart" role="menu">
-          <cart> 
-          </cart>              
-              <li class="divider"></li>
-              <li><a class="text-center" href="">View Cart</a></li>
-          </ul>
-        </li>
-      </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+    <?php
+include 'navbar.php';
+?>
 
     <!-- Page Content -->
     <div class="container">
@@ -146,9 +104,9 @@ body{ margin-top:20px; }
             <div class="col-md-12 well text-center">
                 <h1> STEP 1</h1>
 				<div class="row">
-				<ship>
+				<shipform>
 					
-				</ship>
+				</shipform>
 				</div>
                 <button id="activate-step-2" class="btn btn-primary btn-lg">Next Step</button>
             </div>
@@ -241,9 +199,41 @@ body{ margin-top:20px; }
             <div class="col-md-12 well">
                 <h1 class="text-center"> STEP 3</h1>
 				<div class="row">
-				<confirm>
-					
-				</confirm>
+				<table class="table table-hover">
+				<thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+				
+				<tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><h5>Subtotal<br>Estimated shipping</h5><h3>Total</h3></td>
+                        <td class="text-right"><h5><strong>$<subtotal>0.00</subtotal><br>$<ship>0.00</ship></strong></h5><h3>$<total>0.00</total></h3></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+						</a>
+                        <td>
+                        <a href="order.php"><button type="submit" class="btn btn-success" >
+                            Place Order <span class="glyphicon glyphicon-play"></span>
+                        </button></a></td>
+                    </tr>
+                </tfoot>
+				<confirmation>
+					mmmmm
+				</confirmation>
+				</table>
 				</div>
             </div>
         </div>
@@ -306,92 +296,80 @@ body{ margin-top:20px; }
         $(this).remove();
     }) 
 	
-	
-	
-function loadTableData()
-		{
 
-			
 
 			var user_id = eval(<?php echo $_SESSION['userSession']; ?>);
 			console.log(user_id);
-
-			// Perform a get request to our api passing the page number and page size as parameters
-			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?order=" + sort + order + "&page=" + page + "," + page_size + "&filter=id,eq," + url_id)
-
-			// The '.done' method fires when the get request completes
-			.done(function(data)
+			if (user_id == null)
 			{
-				// Append our new html to this pages only 'thead' tag
-				$('item').html(item_box);
-
-				// Pull the products out of our json object 
-				var records = data.products.records;
-
 				// Start an empty html string
-				item_box = "";
-				for (var i = 0; i < records.length; i++)
-				{
-					//Start a new row for each product and put the product id in a data-element
-					item_box = item_box + '<div class="col-md-8"><div class="thumbnail">';
-					item_box = item_box + '&nbsp;\n\n\n\n&nbsp;&nbsp;&nbsp;&nbsp;<img class="img-responsive" src="' + records[i][6] + '250_.jpg" alt=""><div class="caption-full">';
+					item_box = "";
+						
+						item_box = item_box + '<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3"><form role="form" method="POST"><h2>Verify your shipping address</h2>';
+						item_box = item_box + '<hr class="colorgraph"> <div class="row"> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
+						item_box = item_box + '<input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">';
+						item_box = item_box + '</div> </div> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
+						item_box = item_box + '<input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2"</div></div> </div>';
+						item_box = item_box + '<div class="form-group"><input type="address1" name="address1" id="address1" class="form-control input-lg" placeholder="Address 1" tabindex="4"></div>';
+						item_box = item_box + '<div class="form-group"><input type="address2" name="address2" id="address2" class="form-control input-lg" placeholder="Address 2" tabindex="4"></div>';
+						item_box = item_box + '<div class="form-group"><input type="address3" name="address3" id="address3" class="form-control input-lg" placeholder="Address 3" tabindex="4"></div>';
+						item_box = item_box + '<div class="form-group"><input type="city" name="city" id="city" class="form-control input-lg" placeholder="City" tabindex="4"></div>';
+						item_box = item_box + '<div class="form-group"><input type="state" name="state" id="state" class="form-control input-lg" placeholder="State" tabindex="4"></div>';
 
-
-
-					item_box = item_box + '<div><h4><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=';
-					item_box = item_box + records[i][0] + '">' + records[i][1] + '</a><div class="price-cart">$' + records[i][3];
-					item_box = item_box + '<span class="pull-right"><a onclick="AddCart()" class="add-cart btn btn-success">Add To Cart</a>';
-					item_box = item_box + '</span>' + '</div></h4></div> <p>' + records[i][2] + '</p></div><comments></comments>';
-				}
-				
-				$('item').html(item_box);
-			});
-		}
-
-			var user_id = eval(<?php echo $_SESSION['userSession']; ?>);
-			console.log(user_id);
-
-			// Perform a get request to our api passing the page number and page size as parameters
-			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/users?filter=id,eq," + user_id)
-
-			// The '.done' method fires when the get request completes
-			.done(function(data)
+						
+						
+						item_box = item_box + '<div class="row"> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">'; 
+						item_box = item_box + '<input type="country" name="country" id="country" class="form-control input-lg" placeholder="Country" tabindex="5"> </div>';
+						item_box = item_box + '</div> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
+						item_box = item_box + '<input type="zip" name="zip" id="zip" class="form-control input-lg" placeholder="Zip Code" tabindex="6"> </div>';
+						item_box = item_box + '</div> </div> </form> </div>';
+					
+					$('shipform').html(item_box);
+			}	
+			else
 			{
-				// Append our new html to this pages only 'thead' tag
-				//$('ship').html(item_box);
+				// Perform a get request to our api passing the page number and page size as parameters
+				$.get("http://alliancedev.xyz/AllianceDev/api/api.php/users?filter=id,eq," + user_id)
 
-				// Pull the products out of our json object 
-				var records = data.users.records;
-
-				// Start an empty html string
-				item_box = "";
-				for (var i = 0; i < records.length; i++)
+				// The '.done' method fires when the get request completes
+				.done(function(data)
 				{
-					//Start a new row for each product and put the product id in a data-element
-					
-					
-					item_box = item_box + '<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3"><form role="form" method="POST"><h2>Verify your shipping address</h2>';
-					item_box = item_box + '<hr class="colorgraph"> <div class="row"> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
-					item_box = item_box + '<input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1" value="' + records[i][2] + '">';
-					item_box = item_box + '</div> </div> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
-					item_box = item_box + '<input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2" value= "' + records[i][3] + '"</div></div> </div>';
-					item_box = item_box + '<div class="form-group"><input type="address1" name="address1" id="address1" class="form-control input-lg" placeholder="Address 1" tabindex="4" value= "' + records[i][5] + '"></div>';
-					item_box = item_box + '<div class="form-group"><input type="address2" name="address2" id="address2" class="form-control input-lg" placeholder="Address 2" tabindex="4" value= "' + records[i][6] + '"></div>';
-					item_box = item_box + '<div class="form-group"><input type="address3" name="address3" id="address3" class="form-control input-lg" placeholder="Address 3" tabindex="4" value= "' + records[i][7] + '"></div>';
-					item_box = item_box + '<div class="form-group"><input type="city" name="city" id="city" class="form-control input-lg" placeholder="City" tabindex="4" value= "' + records[i][8] + '"></div>';
-					item_box = item_box + '<div class="form-group"><input type="state" name="state" id="state" class="form-control input-lg" placeholder="State" tabindex="4" value= "' + records[i][9] + '"></div>';
+					// Append our new html to this pages only 'thead' tag
+					//$('ship').html(item_box);
 
+					// Pull the products out of our json object 
+					var records = data.users.records;
+
+					// Start an empty html string
+					item_box = "";
+					for (var i = 0; i < records.length; i++)
+					{
+						//Start a new row for each product and put the product id in a data-element
+						
+						
+						item_box = item_box + '<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3"><form role="form" method="POST"><h2>Verify your shipping address</h2>';
+						item_box = item_box + '<hr class="colorgraph"> <div class="row"> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
+						item_box = item_box + '<input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1" value="' + records[i][2] + '">';
+						item_box = item_box + '</div> </div> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
+						item_box = item_box + '<input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2" value= "' + records[i][3] + '"</div></div> </div>';
+						item_box = item_box + '<div class="form-group"><input type="address1" name="address1" id="address1" class="form-control input-lg" placeholder="Address 1" tabindex="4" value= "' + records[i][5] + '"></div>';
+						item_box = item_box + '<div class="form-group"><input type="address2" name="address2" id="address2" class="form-control input-lg" placeholder="Address 2" tabindex="4" value= "' + records[i][6] + '"></div>';
+						item_box = item_box + '<div class="form-group"><input type="address3" name="address3" id="address3" class="form-control input-lg" placeholder="Address 3" tabindex="4" value= "' + records[i][7] + '"></div>';
+						item_box = item_box + '<div class="form-group"><input type="city" name="city" id="city" class="form-control input-lg" placeholder="City" tabindex="4" value= "' + records[i][8] + '"></div>';
+						item_box = item_box + '<div class="form-group"><input type="state" name="state" id="state" class="form-control input-lg" placeholder="State" tabindex="4" value= "' + records[i][9] + '"></div>';
+
+						
+						
+						item_box = item_box + '<div class="row"> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">'; 
+						item_box = item_box + '<input type="country" name="country" id="country" class="form-control input-lg" placeholder="Country" tabindex="5"value= "' + records[i][10] + '"> </div>';
+						item_box = item_box + '</div> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
+						item_box = item_box + '<input type="zip" name="zip" id="zip" class="form-control input-lg" placeholder="Zip Code" tabindex="6"value= "' + records[i][11] + '"> </div>';
+						item_box = item_box + '</div> </div> </form> </div>';
+					}
 					
-					
-					item_box = item_box + '<div class="row"> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">'; 
-					item_box = item_box + '<input type="country" name="country" id="country" class="form-control input-lg" placeholder="Country" tabindex="5"value= "' + records[i][10] + '"> </div>';
-					item_box = item_box + '</div> <div class="col-xs-12 col-sm-6 col-md-6"> <div class="form-group">';
-					item_box = item_box + '<input type="zip" name="zip" id="zip" class="form-control input-lg" placeholder="Zip Code" tabindex="6"value= "' + records[i][11] + '"> </div>';
-					item_box = item_box + '</div> </div> </form> </div>';
-				}
-				
-				$('ship').html(item_box);
-			});
+					$('shipform').html(item_box);
+				});
+			}
 			
 			
 			
@@ -440,7 +418,9 @@ function loadTableData()
 						confirm_box = confirm_box + '<td class="col-md-1 text-center"><strong>'+ tot +'</strong></td><td class="col-md-1">';
                         confirm_box = confirm_box + '<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Remove';
                         confirm_box = confirm_box + '</button></td></tr>';
-						$('confirm').html(confirm_box);
+						//document.getElementsByTagName('confirmation')[0].innerHTML += confirm_box;
+						$('confirmation').html(confirm_box);
+						
 						
 					}	
 				}).then(function(){

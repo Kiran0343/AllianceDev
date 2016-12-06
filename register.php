@@ -104,6 +104,9 @@ if (isset($_POST['register']))
 	</style>
 </head>
 <body>
+<?php
+include 'navbar.php';
+?>
  <div class="container">
 
 <div class="row">

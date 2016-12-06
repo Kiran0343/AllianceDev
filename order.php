@@ -74,10 +74,10 @@ div.price-cart{
 
 <body>
 
-<?php
+    <?php
 include 'navbar.php';
 ?>
-   	&nbsp;
+	&nbsp;
 	&nbsp;
 	&nbsp;
 	&nbsp;
@@ -116,20 +116,6 @@ include 'navbar.php';
                         <td></td>
                         <td><h5>Subtotal<br>Estimated shipping</h5><h3>Total</h3></td>
                         <td class="text-right"><h5><strong>$<subtotal>0.00</subtotal><br>$<ship>0.00</ship></strong></h5><h3>$<total>0.00</total></h3></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                        <a href="index.php"><button type="submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                        </button></td>
-						</a>
-                        <td>
-                        <a href="checkout.php"><button type="submit" class="btn btn-success" >
-                            Checkout <span class="glyphicon glyphicon-play"></span>
-                        </button></a></td>
                     </tr>
                 </tfoot>
             </table>
@@ -173,7 +159,7 @@ include 'navbar.php';
 			
 			for (var j = 0; j < items.length; j++)
 			{
-
+				order
 				url_id = items[j][1];
 				// Perform a get request to our api passing the page number and page size as parameters
 				$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?filter=id,eq," + url_id)
@@ -183,10 +169,10 @@ include 'navbar.php';
 				{
 					// Pull the products out of our json object 
 					var records = data.products.records;
-					//console.log(records);
+					console.log(records);
 					for (var i = 0; i < records.length; i++)
 					{
-						//console.log(j);
+						console.log(items[j][0]);
 						//Start a new row for each product and put the product id in a data-element
 						item_box = item_box + '<tr><td class="col-md-6"><div class="media">';
                         item_box = item_box + '<a class="thumbnail pull-left" href="#">';
@@ -195,9 +181,9 @@ include 'navbar.php';
                         item_box = item_box + '<h5 class="media-heading"> by <a href="#">'+ records[i][4] +'</a></h5>';
                         item_box = item_box + '<span>Status: </span><span class="text-warning"><strong>Available</strong></span></div>';
                         item_box = item_box + '</div></td><td class="col-md-1" style="text-align: center">';
-                        item_box = item_box + '<input type="text" class="form-control" id="amount" value="'+ items[j-1][0]+'"></td>';
+                        item_box = item_box + '<input type="text" class="form-control" id="amount" value="'+ items[j][0]+'"></td>';
                         item_box = item_box + '<td class="col-md-1 text-center"><strong>'+records[i][3] +'</strong></td>';
-						var tot = parseFloat(records[i][3]) * parseInt(items[j-1][0]);
+						var tot = parseFloat(records[i][3]) * parseInt(items[j][0]);
 						subtotal = subtotal + tot;
 						item_box = item_box + '<td class="col-md-1 text-center"><strong>'+ tot +'</strong></td><td class="col-md-1">';
                         item_box = item_box + '<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Remove';
@@ -216,9 +202,32 @@ include 'navbar.php';
 				});
 				
 			}
-			
+	
  // End .done
-		
+			
+			///To post to orders table
+			var order = $.post("http://alliancedev.xyz/AllianceDev/api/api.php/orders",
+			{
+				user_id: "<?php echo $_SESSION['userSession']; ?>",
+				status: "Preparing for shipment"
+			});
+			for (var j = 0; j < items.length; j++)
+			{
+				url_id = items[j][1];
+				
+				// Pull the products out of our json object 
+				//var records = data.products.records;
+				//console.log(records);
+
+				console.log(items[j][1]);
+				$.post("http://alliancedev.xyz/AllianceDev/api/api.php/orders_items",
+				{
+					order_id: order,
+					item_id: items[j][1],
+					amount: items[j][0]
+				})
+			}
+			$.get("http://alliancedev.xyz/AllianceDev/clearsess.php")
 		
 
 		function guid()
@@ -232,7 +241,7 @@ include 'navbar.php';
 			return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
 				s4() + '-' + s4() + s4() + s4();
 		}
-
+	
 
 
 	}(jQuery));

@@ -1,130 +1,33 @@
 <?php
 session_start();
-$sid = session_id();
+if(!isset($_SESSION['cart']))
+{
+	$_SESSION['cart'] = "";
+}
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-	<meta charset=utf-8 />
-	<title>Online Bookstore</title>
-	<link rel="stylesheet" type="text/css" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="./css/font-awesome.css" />
-	<script src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script src="./plugin/jquery.twbsPagination.js"></script>
-	<script src="./js/cookies.js"></script>
-	
-	<!--[if IE]>
-		<script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS --<link href="css/shop-item.css" rel="stylesheet"> -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 	<style>
-
-#pleaseWaitDialog {
-            width: 400px;
-            height: 50px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -25px;
-            margin-left: -200px;
-            padding: 20px;
-        }
-
-        /* When the body has the loading class, we turn
-           the scrollbar off with overflow:hidden */
-        body.loading {
-            overflow: hidden;   
-        }
-
-        /* Anytime the body has the loading class, our
-           modal element will be visible */
-        body.loading .modal {
-            display: block;
-        }
-        
-        .col-centered{
-            float: none;
-            margin: 0 auto;
-        }
-        
-        .modal-header {
-            padding-bottom: 5px;
-        }
-
-        .modal-footer {
-                padding: 0;
-            }
-    
-        .modal-footer .btn-group button {
-            height:40px;
-            border-top-left-radius : 0;
-            border-top-right-radius : 0;
-            border: none;
-            border-right: 1px solid #ddd;
-        }
-    
-        .modal-footer .btn-group:last-child > button {
-            border-right: 0;
-        }
-		
-		body {
-			padding:20px;
-		}
-		
-
-
-    #custom-search-form {
-        margin:0;
-        margin-top: 5px;
-        padding: 0;
-    }
- 
-    #custom-search-form .search-query {
-        padding-right: 3px;
-        padding-right: 4px \9;
-        padding-left: 3px;
-        padding-left: 4px \9;
-        /* IE7-8 doesn't have border-radius, so don't indent the padding */
- 
-        margin-bottom: 0;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-    }
- 
-    #custom-search-form button {
-        border: 0;
-        background: none;
-        /** belows styles are working good */
-        padding: 2px 5px;
-        margin-top: 2px;
-        position: relative;
-        left: -28px;
-        /* IE7-8 doesn't have border-radius, so don't indent the padding */
-        margin-bottom: 0;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-    }
- 
-    .search-query:focus + button {
-        z-index: 3;   
-    }
-
-	#search_container{
-		padding-bottom:20px;
-	}
-	
-	img{
-		margin: auto;
-	}
-     
-	
-	
-	
-	
 	ul.dropdown-cart{
     min-width:250px;
 }
@@ -168,55 +71,12 @@ div.price-cart{
 	padding:12px
 }
 	</style>
-           
 </head>
 
 <body>
-<!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top navbar-default" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="http://alliancedev.xyz/AllianceDev/index.php">Online Bookstore</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="http://alliancedev.xyz/AllianceDev/login.php">Login</a>
-                    </li>
-					<li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-				<ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> <cart-counter>0</cart-counter> - Items<span class="caret"></span></a>
-          <ul class="dropdown-menu dropdown-cart" role="menu">
-          <cart> 
-          </cart>              
-              <li class="divider"></li>
-              <li><a class="text-center" href="">View Cart</a></li>
-          </ul>
-        </li>
-      </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+<?php
+include 'navbar.php';
+?>
     
 
     <!-- Page Content -->
@@ -227,9 +87,10 @@ div.price-cart{
             <div class="col-md-2">
                 <p class="lead">Shop Name</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+                    <a href="index.php?cat=fantasy" class="list-group-item">Fantasy</a>
+                    <a href="index.php?cat=comic" class="list-group-item">Comics</a>
+                    <a href="index.php?cat=textbook" class="list-group-item">Textbooks</a>
+					<a href="index.php?cat=romance" class="list-group-item">Romance</a>
                 </div>
             </div>
 
@@ -311,10 +172,7 @@ div.price-cart{
     //https://esimakin.github.io/twbs-pagination/
 	
 	var guid = <?php echo"\"{$sid}\";";?>
-	
-	//Cookies.set('test_cookie', guid,{ expires: Infinity , domain: 'alliancedev.xyz'});
-	
-	console.log(Cookies.get('test_cookie'));
+
 	
 	console.log(guid);
 
@@ -370,75 +228,121 @@ div.price-cart{
 
     function loadTableData(page, page_size,sort,order) {
 	
-		var sort = typeof sort !== 'undefined' ?  sort.trim() : "id";
-		var order = typeof order !== 'undefined' ?  ","+order : "";
-    
-        myWait.show();
-                
-        // Perform a get request to our api passing the page number and page size as parameters
-		console.log("http://alliancedev.xyz/AllianceDev/api/api.php/products?order="+sort+order+"&page=" + page + "," + page_size);
-        $.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?order="+sort+order+"&page=" + page + "," + page_size)
+		var url_id = getParameterByName('cat')
+		
+		if (url_id == null)
+		{	
+			var sort = typeof sort !== 'undefined' ?  sort.trim() : "id";
+			var order = typeof order !== 'undefined' ?  ","+order : "";
+		
+			myWait.show();
+					
+			// Perform a get request to our api passing the page number and page size as parameters
+			console.log("http://alliancedev.xyz/AllianceDev/api/api.php/products?order="+sort+order+"&page=" + page + "," + page_size);
+			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?order="+sort+order+"&page=" + page + "," + page_size)
 
-        // The '.done' method fires when the get request completes
-        .done(function(data) {
-        
-           //console.log(data);
-		   
-            // Append our new html to this pages only 'thead' tag
-            $('item').html(item_box);
+			// The '.done' method fires when the get request completes
+			.done(function(data) {
+			
+			   //console.log(data);
+			   
+				// Append our new html to this pages only 'thead' tag
+				$('item').html(item_box);
 
-            // Pull the products out of our json object 
-            var records = data.products.records;
+				// Pull the products out of our json object 
+				var records = data.products.records;
 
-            // Start an empty html string
-            item_box = "";
-            for (var i = 0; i < records.length; i++) 
-			{
-                //Start a new row for each product and put the product id in a data-element
-                item_box = item_box + '<div class="col-sm-4 col-lg-4 col-md-4">';
-				item_box = item_box + '<div class="thumbnail"><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'"><img src="' + records[i][6] + '250_.jpg"  alt=""></a>';
+				// Start an empty html string
+				item_box = "";
+				for (var i = 0; i < records.length; i++) 
+				{
+					//Start a new row for each product and put the product id in a data-element
+					item_box = item_box + '<div class="col-sm-4 col-lg-4 col-md-4">';
+					item_box = item_box + '<div class="thumbnail"><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'"><img src="' + records[i][6] + '250_.jpg"  alt=""></a>';
 
-                item_box = item_box + '<div class="caption"><h4 class="pull-right">$' + records[i][3]+'</h4>';
-				item_box = item_box + '<h4><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'">' + records[i][1].substr(0,40) +'...</a></h4>';
+					item_box = item_box + '<div class="caption"><h4 class="pull-right">$' + records[i][3]+'</h4>';
+					item_box = item_box + '<h4><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'">' + records[i][1].substr(0,40) +'...</a></h4>';
+					
+					item_box = item_box + '<p>' + records[i][2].substr(0,100) + '...</a>.</p></div><div class="ratings">';
+					item_box = item_box + '<p class="pull-right">15 reviews</p><p>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span></p></div></div></div>';
+				}
+
+				// At this point "rows" should have 'page_size' number of items in it,
+				// so append all those rows to the body of the table.
+				$('item').html(item_box);
+			
+				myWait.hide();
 				
-				item_box = item_box + '<p>' + records[i][2].substr(0,100) + '...</a>.</p></div><div class="ratings">';
-				item_box = item_box + '<p class="pull-right">15 reviews</p><p>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
-				item_box = item_box + '<span class="glyphicon glyphicon-star"></span></p></div></div></div>';
-            }
-
-            // At this point "rows" should have 'page_size' number of items in it,
-            // so append all those rows to the body of the table.
-            $('item').html(item_box);
-            
-/*			
 			
+				$('.fa-shopping-cart').click(function(){
+					console.log($(this).closest('tr').data( "id" ));
+					
+					var item = [];
+					$(this).closest('tr').find('td').each(function(){
+						console.log($(this).text());
+						item.push($(this).html());
+					});
+					console.log(item);
+					addCartItem(item);
+				})
 		
-		
-			
 
-*/		
-            myWait.hide();
+			});
+		}
+		else
+		{
+			//console.log(url_id)
 			
+			var sort = typeof sort !== 'undefined' ?  sort.trim() : "id";
+			var order = typeof order !== 'undefined' ?  ","+order : "";
 		
-            $('.fa-shopping-cart').click(function(){
-                console.log($(this).closest('tr').data( "id" ));
-                
-				var item = [];
-                $(this).closest('tr').find('td').each(function(){
-					console.log($(this).text());
-					item.push($(this).html());
-				});
-				console.log(item);
-				addCartItem(item);
-            })
-    
+			myWait.show();
+					
+			// Perform a get request to our api passing the page number and page size as parameters
+			console.log("http://alliancedev.xyz/AllianceDev/api/api.php/products?filter=Categories,cs,"+url_id);
+			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?filter=Categories,cs,"+url_id)
 
-        });
-    } // End .done
+			// The '.done' method fires when the get request completes
+			.done(function(data) {
+			
+			   //console.log(data);
+			   
+				// Append our new html to this pages only 'thead' tag
+				$('item').html(item_box);
+
+				// Pull the products out of our json object 
+				var records = data.products.records;
+
+				// Start an empty html string
+				item_box = "";
+				for (var i = 0; i < records.length; i++) 
+				{
+					//Start a new row for each product and put the product id in a data-element
+					item_box = item_box + '<div class="col-sm-4 col-lg-4 col-md-4">';
+					item_box = item_box + '<div class="thumbnail"><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'"><img src="' + records[i][6] + '250_.jpg"  alt=""></a>';
+
+					item_box = item_box + '<div class="caption"><h4 class="pull-right">$' + records[i][3]+'</h4>';
+					item_box = item_box + '<h4><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'">' + records[i][1].substr(0,40) +'...</a></h4>';
+					
+					item_box = item_box + '<p>' + records[i][2].substr(0,100) + '...</a>.</p></div><div class="ratings">';
+					item_box = item_box + '<p class="pull-right">15 reviews</p><p>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span>';
+					item_box = item_box + '<span class="glyphicon glyphicon-star"></span></p></div></div></div>';
+				}
+				$('item').html(item_box);
+			
+				myWait.hide();
+		});
+		}
+	} //End function
 	
 	$('#updateCart').click(function(){
 		$('.cart-item').each(function(){
@@ -589,7 +493,19 @@ div.price-cart{
 	}
 	
     getTotalPages();
-
+function getParameterByName(name, url)
+    {
+        if (!url)
+        {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
 }(jQuery));
 </script>
