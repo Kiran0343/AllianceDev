@@ -94,7 +94,7 @@ div.price-cart{
                         <a href="http://alliancedev.xyz/AllianceDev/login.php">Login</a>
                     </li>
 					<li>
-                        <a href="#">About</a>
+                        <a href="http://alliancedev.xyz/AllianceDev/logout.php">Logout</a>
                     </li>
                     <li>
                         <a href="#">Services</a>
@@ -110,7 +110,7 @@ div.price-cart{
           <cart> 
           </cart>              
               <li class="divider"></li>
-              <li><a class="text-center" href="">View Cart</a></li>
+              <li><a class="text-center" href="cart.php">View Cart</a></li>
           </ul>
         </li>
       </ul>
@@ -354,7 +354,7 @@ div.price-cart{
 			//console.log(scart);
 			scart = scart.split(" ");
 			
-			for (var i = 0; i < scart.length - 1; i++)
+			for (var i = 0; i < scart.length; i++)
 			{
 				scart[i] = scart[i].split(",");
 				//console.log(scart[0][1]);
@@ -364,7 +364,7 @@ div.price-cart{
 			}
 			
 			console.log(scart);
-			for(var j = 0; j < scart.length - 1; j++){
+			for(var j = 0; j < scart.length; j++){
 				if(scart.length > 1)
 				{
 					var url_id = scart[j][1];
@@ -567,6 +567,7 @@ div.price-cart{
 function AddCart()
 		{
 			var url_id = getParameterByName('id');
+			$.post('http://alliancedev.xyz/AllianceDev/addtocart.php', { cart: '(1,'+url_id+')' });
 			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?&filter=id,eq," + url_id)
 
 			// The '.done' method fires when the get request completes
@@ -594,14 +595,10 @@ function AddCart()
 			cart_counter = parseInt(cart_counter) + 1;
 			console.log(cart_counter);
 			document.getElementsByTagName('cart-counter')[0].innerHTML = cart_counter;
-			AddToCart();
 			
 		}
 		
-		function AddToCart()
-		{
-			var session = '<?php $_SESSION["cart"] =  "{$_SESSION['cart']}(1,{$_GET['id']}) "; $_SESSION['cart'] = substr($_SESSION['cart'],0, strrpos($_SESSION['cart'],'('));?>';
-		}
+		
 		
 		function getParameterByName(name, url)
 		{

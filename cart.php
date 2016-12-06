@@ -157,7 +157,7 @@ div.price-cart{
                         <td></td>
                         <td></td>
                         <td><h5>Subtotal<br>Estimated shipping</h5><h3>Total</h3></td>
-                        <td class="text-right"><h5><strong><subtotal>$24.59</subtotal><br><ship>$6.94</ship></strong></h5><h3><total>$31.53</total></h3></td>
+                        <td class="text-right"><h5><strong>$<subtotal>0.00</subtotal><br>$<ship>0.00</ship></strong></h5><h3>$<total>0.00</total></h3></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -250,7 +250,9 @@ div.price-cart{
 				}).then(function(){
 					document.getElementsByTagName('subtotal')[0].innerHTML = subtotal;
 					var total = subtotal + (0.1 * subtotal)
-					document.getElementsByTagName('ship')[0].innerHTML = (0.1 * subtotal);
+					var shipping = Math.round((0.1 * subtotal)*100)/100;
+					total = Math.round(total*100)/100;
+					document.getElementsByTagName('ship')[0].innerHTML = shipping;
 					document.getElementsByTagName('total')[0].innerHTML = total;
 				});
 				

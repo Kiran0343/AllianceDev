@@ -392,6 +392,67 @@ function loadTableData()
 				
 				$('ship').html(item_box);
 			});
+			
+			
+			
+			
+			
+			var cart = "<?php echo $_SESSION['cart'];?>";
+			var subtotal = 0;
+
+			items = cart.split(" ");
+			for (var k = 0; k < items.length; k++)
+			{
+				items[k] = items[k].split(",");
+				items[k][0] = items[k][0].replace(/\D/g,'');
+				items[k][1] = items[k][1].replace(/\D/g,'');
+			}
+			var confirm_box = "";
+			
+			for (var j = 0; j < items.length; j++)
+			{
+
+				url_id = items[j][1];
+				// Perform a get request to our api passing the page number and page size as parameters
+				$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?filter=id,eq," + url_id)
+
+				// The '.done' method fires when the get request completes
+				.done(function(data)
+				{
+					// Pull the products out of our json object 
+					var records = data.products.records;
+					//console.log(records);
+					for (var i = 0; i < records.length; i++)
+					{
+						//console.log(j);
+						//Start a new row for each product and put the product id in a data-element
+						confirm_box = confirm_box + '<tr><td class="col-md-6"><div class="media">';
+                        confirm_box = confirm_box + '<a class="thumbnail pull-left" href="#">';
+						confirm_box = confirm_box + '<img class="media-object" src="'+ records[i][6] +'72.jpg"> </a><div class="media-body">';
+                        confirm_box = confirm_box + '<h4 class="media-heading"><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0]+'">'+records[i][1]+'</a></h4>';
+                        confirm_box = confirm_box + '<h5 class="media-heading"> by <a href="#">'+ records[i][4] +'</a></h5>';
+                        confirm_box = confirm_box + '<span>Status: </span><span class="text-warning"><strong>Available</strong></span></div>';
+                        confirm_box = confirm_box + '</div></td><td class="col-md-1" style="text-align: center">';
+                        confirm_box = confirm_box + '<input type="text" class="form-control" id="amount" value="'+ items[j-1][0]+'"></td>';
+                        confirm_box = confirm_box + '<td class="col-md-1 text-center"><strong>'+records[i][3] +'</strong></td>';
+						var tot = parseFloat(records[i][3]) * parseInt(items[j-1][0]);
+						subtotal = subtotal + tot;
+						confirm_box = confirm_box + '<td class="col-md-1 text-center"><strong>'+ tot +'</strong></td><td class="col-md-1">';
+                        confirm_box = confirm_box + '<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Remove';
+                        confirm_box = confirm_box + '</button></td></tr>';
+						$('confirm').html(confirm_box);
+						
+					}	
+				}).then(function(){
+					document.getElementsByTagName('subtotal')[0].innerHTML = subtotal;
+					var total = subtotal + (0.1 * subtotal)
+					var shipping = Math.round((0.1 * subtotal)*100)/100;
+					total = Math.round(total*100)/100;
+					document.getElementsByTagName('ship')[0].innerHTML = shipping;
+					document.getElementsByTagName('total')[0].innerHTML = total;
+				});
+				
+			}
 
 	
 });

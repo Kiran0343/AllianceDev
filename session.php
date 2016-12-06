@@ -6,7 +6,7 @@ include_once 'dbconnect.php';
 session_start();
 
 print_r($_SESSION);
-$_SESSION["cart"] = "(1,1) (1,2)";
+//$_SESSION["cart"] = "(1,1) (1,2)";
 
 
 ?>
