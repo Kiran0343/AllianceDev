@@ -1,6 +1,5 @@
 <?php
 include_once 'dbconnect.php';
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +68,9 @@ ul.dropdown-cart li .item-right button{
 div.price-cart{
 	padding:12px
 }
+cen{
+	text-align: center;
+}
 	</style>
 </head>
 
@@ -125,16 +127,19 @@ div.price-cart{
 
         <div class="row">
 
-            <div class="col-md-2">
+            <div class="col-lg-12">
                 <p class="lead">Shop Name</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+					&nbsp;
+					<cen><h4><p>Bookstore Database Manager</p></h4></cen>
+                    <cen><a onclick="SetActive('Book')" href="#" class="list-group-item">Manage Books</a></cen>
+                    <cen><a onclick="SetActive('Cust')" href="#" class="list-group-item">Manage Customer Information</a></cen>
+                    <cen><a onclick="SetActive('Orde')" href="#" class="list-group-item">Manage Customer Orders</a></cen>
+					<cen><a onclick="SetActive('Anno')" href="#" class="list-group-item">Manage Announcements</a></cen>
                 </div>
             </div>
-			<item>
-            </item>
+			<adminspace>
+            </adminspace>
         </div>
 
     </div>
@@ -148,7 +153,7 @@ div.price-cart{
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; ALLiANCE</p>
                 </div>
             </div>
         </footer>
@@ -232,7 +237,7 @@ div.price-cart{
 				{
 					//Start a new row for each product and put the product id in a data-element
 					item_box = item_box + '<div class="col-md-8"><div class="thumbnail">';
-					item_box = item_box + '&nbsp;\n\n\n\n&nbsp;&nbsp;&nbsp;&nbsp;<img class="img-responsive" src="' + records[i][6] + '250_.jpg" alt=""><div class="caption-full">';
+					item_box = item_box + '<img class="img-responsive" src="' + records[i][6] + '250_.jpg" alt=""><div class="caption-full">';
 
 
 
@@ -333,77 +338,18 @@ div.price-cart{
 				*/
 
 
-				$('#add-cart').click(function()
-				{
-					console.log($(this));
-/*
-					var item = [];
-					$(this).closest('tr').find('td').each(function()
-					{
-						console.log($(this).text());
-						item.push($(this).html());
-					});*/
-					console.log(item);
-					//addCartItem(item);
-				})
-
-
 			});
-		
-			var scart = "" + '<?php echo $_SESSION["cart"]?>' + "";
-			//console.log(scart);
-			scart = scart.split(" ");
-			
-			for (var i = 0; i < scart.length - 1; i++)
-			{
-				scart[i] = scart[i].split(",");
-				//console.log(scart[0][1]);
-				scart[i][0] = scart[i][0].replace(/\D/g,'');
-				scart[i][1] = scart[i][1].replace(/\D/g,'');
-				//console.log(scart);
-			}
-			
-			console.log(scart);
-			for(var j = 0; j < scart.length - 1; j++){
-				if(scart.length > 1)
-				{
-					var url_id = scart[j][1];
-					
-					$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?&filter=id,eq," + url_id)
-
-					// The '.done' method fires when the get request completes
-					.done(function(data)
-					{
-						// Pull the products out of our json object 
-						var records = data.products.records;
-						
-						// Start an empty html string
-						cart_item = document.getElementsByTagName('cart')[0].innerHTML;
-						for (var i = 0; i < records.length; i++)
-						{
-							cart_item = cart_item + '<li> <span class="item"> <span class="item-left"> <img src="' + records[i][6]+'45_.jpg" alt="" />';
-							cart_item = cart_item + '<span class="item-info"> <span>' + records[i][1].substr(0,15) +'...</span> <span>$ ' + records[i][3] + '</span> </span></span>';
-							cart_item = cart_item + '<span class="item-right"><button class="btn btn-xs btn-danger pull-right">x</button></span></span></li>';
-						}
-
-						// At this point "rows" should have 'page_size' number of items in it,
-						// so append all those rows to the body of the table.
-						$('cart').html(cart_item);
-						
-					});
-					
-					var cart_counter = document.getElementsByTagName('cart-counter')[0].innerHTML;
-					
-					cart_counter = parseInt(cart_counter) + 1;
-					console.log(cart_counter);
-					document.getElementsByTagName('cart-counter')[0].innerHTML = cart_counter;
-				}
-			
-			}
-		
 		} // End .done
 
-		
+		$('#updateCart').click(function()
+		{
+			$('.cart-item').each(function()
+			{
+				console.log($(this).find('.price').text());
+				console.log($(this).find('.count').val());
+
+			});
+		});
 
 		function getTotalPages()
 		{
@@ -430,115 +376,6 @@ div.price-cart{
 
 		}
 
-		$('#add-cart').click(function(event)
-		{
-			event.preventDefault();
-			var searchtxt = $('#search-keys').val();
-			console.log(searchtxt);
-			/*$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?filter=desc,cs,"+searchtxt)
-
-			// The '.done' method fires when the get request completes
-			.done(function(data) {
-				//console.log(data);
-				$('tbody').html('');
-				
-				  // Pull the column names out of our json object 
-				var cols = data.products.columns;
-
-				// Start an html string with a row tag
-				item_box = "<tr>";
-				for (var i = 0; i < cols.length; i++) {
-
-					// Continuously append header tags to our row
-					item_box += "<th nowrap> " + cols[i] +"</th>";
-					
-				}
-
-				// Finish off our row with an empty header tag 
-				item_box = item_box + "<th style=\"width: 36px;\"></th></tr>";
-
-				// Append our new html to this pages only 'thead' tag
-				$('thead').html(item_box);
-
-				// Pull the products out of our json object 
-				var records = data.products.records;
-
-				// Start an empty html string
-				rows = "";
-				for (var i = 0; i < records.length; i++) {
-
-					//Start a new row for each product and put the product id in a data-element
-					rows = rows + "<tr data-id="+records[i][0]+" id=id"+records[i][0]+">";
-
-					// Loop through each item for a product and append a table data tag to our row
-					for (var j = 0; j < records[i].length; j++) {
-					
-									
-						// This is the last item in the record set so it's the img url.
-						if(j == records[i].length-1){
-							var result = records[i][j] .split(' ');
-							var img = result[0].replace("~","25");
-							records[i][j] = "<img src="+img+">";
-						}
-						rows = rows + "<td>" + records[i][j] + "</td>";
-					}
-					rows = rows + '<td style="vertical-align:middle" nowrap><i class="fa fa-shopping-cart" aria-hidden="true"></i></td>';
-					// Finish the row for a product
-					rows = rows + "</tr>";
-				}
-
-				// At this point "rows" should have 'page_size' number of items in it,
-				// so append all those rows to the body of the table.
-				$('tbody').html(rows);
-			});*/
-		});
-
-		function addCartItem(item)
-		{
-
-			var row = '' +
-				'<div class="row cart-item" id="item-' + item[0] + '">' +
-				'<div class="col-xs-2">' + item[4] +
-				'</div>' +
-				'<div class="col-xs-3">' +
-				'	<h4 class="product-name"><strong>' + item[1] + '</strong></h4>' +
-				'</div>' +
-				'<div class="col-xs-7">' +
-				'	<div class="col-xs-4 text-right">' +
-				'		<h6><strong><span class="price">$' + item[3] + '</span><span class="text-muted"> x </span></strong></h6>' +
-				'	</div>' +
-				'	<div class="col-xs-5">' +
-				'		<input type="text" class="form-control input-sm count" value="1">' +
-				'	</div>' +
-				'	<div class="col-xs-2">' +
-				'		<button type="button" class="btn btn-link btn-xs">' +
-				'			<span class="glyphicon glyphicon-trash"> </span>' +
-				'		</button>' +
-				'	</div>' +
-				'</div>' +
-				'</div>' +
-				'<hr>';
-
-			var postData = {};
-			postData['uid'] = guid;
-			postData['pid'] = item[0];
-			postData['count'] = 1;
-			postData['description'] = item[1];
-			postData['price'] = item[3];
-			postData['time-added'] = Math.floor(Date.now() / 1000);
-
-			console.log(postData);
-			var cartTotal = parseFloat($('#cart-total').text());
-			if (isNaN(cartTotal))
-				cartTotal = 0;
-
-			cartTotal += parseFloat(item[3]);
-			console.log(cartTotal);
-			$('#cart-body').append(row);
-			$('#cart-total').text(cartTotal)
-			$.post("http://alliancedev.xyz/AllianceDev/api/api.php/shopping_cart/", postData);
-		}
-
 
 
 		function guid()
@@ -561,9 +398,6 @@ div.price-cart{
 
 	}(jQuery));
 
-	
-	
-	
 function AddCart()
 		{
 			var url_id = getParameterByName('id');
@@ -594,14 +428,8 @@ function AddCart()
 			cart_counter = parseInt(cart_counter) + 1;
 			console.log(cart_counter);
 			document.getElementsByTagName('cart-counter')[0].innerHTML = cart_counter;
-			AddToCart();
-			
 		}
 		
-		function AddToCart()
-		{
-			var session = '<?php $_SESSION["cart"] =  "{$_SESSION['cart']}(1,{$_GET['id']}) "; $_SESSION['cart'] = substr($_SESSION['cart'],0, strrpos($_SESSION['cart'],'('));?>';
-		}
 		
 		function getParameterByName(name, url)
 		{
@@ -616,6 +444,183 @@ function AddCart()
 			if (!results[2]) return '';
 			return decodeURIComponent(results[2].replace(/\+/g, " "));
 		}
+		
+		function SetActive(id){
+			if(document.getElementsByClassName('active').length != 0){
+				document.getElementsByClassName('active')[0].className = 'list-group-item';
+			}
+			
+			if(id == "Book")
+			{
+				document.getElementsByClassName('list-group-item')[0].className = 'list-group-item active';
+				BookManagingTable();
+				
+			}
+			if(id == "Cust")
+			{
+				document.getElementsByClassName('list-group-item')[1].className = 'list-group-item active';
+				CustManagingTable();
+			}
+			if(id == "Orde")
+			{
+				document.getElementsByClassName('list-group-item')[2].className = 'list-group-item active';
+				OrdeManagingTable();
+			}
+			if(id == "Anno")
+			{
+				document.getElementsByClassName('list-group-item')[3].className = 'list-group-item active';
+				AnnoManagingTable();
+			}
+		}
+		
+		function BookManagingTable(){
+			
+			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?order=id&page=1,10")
+
+			// The '.done' method fires when the get request completes
+			.done(function(data)
+			{
+				document.getElementsByTagName('adminspace')[0].innerHTML = "";
+				
+				// Pull the products out of our json object 
+				var records = data.products.records;
+
+				// Start an empty html string
+				table = "";
+				table = table + '<table class="table">';
+				table = table + '<thead><tr><th>ID</th><th>Book Name</th><th>Description</th>'
+				table = table + '<th>Price</th><th>Author</th><th>Publisher</th><th>Link</th><th>Amount</th><th>Modify</th><th>Delete</th></thead>';
+				table = table + '<tbody>';
+				
+				
+				for (var i = 0; i < records.length; i++)
+				{
+					table = table + '<tr><td>' + records[i][0] +'</td><td>' + records[i][1] +'</td><td>' + records[i][2].substr(0,16)+ '</td>';
+					table = table + '<td>' + records[i][3] +'</td><td>' + records[i][4] +'</td><td>' + records[i][5] +'</td>';
+					table = table + '<td>' + records[i][6] +'</td><td>' + records[i][7] +'</td>';
+					table = table + '<td><a onclick="" class="modify btn">Modify</a></td>';
+					table = table + '<td><a onclick="" class="modify btn">Delete</a></td></tr>';
+				}
+				
+				table = table + '</tbody>';
+				table = table + '</table>';
+				
+				// Append our new html to this pages only 'thead' tag
+				$('adminspace').html(table);
+			});
+		}
+		
+		function CustManagingTable(){
+			
+			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/users?page=1,10")
+
+			// The '.done' method fires when the get request completes
+			.done(function(data)
+			{
+				//console.log(data);
+				document.getElementsByTagName('adminspace')[0].innerHTML = "";
+				// Pull the products out of our json object 
+				var records = data.users.records;
+
+				// Start an empty html string
+				table = "";
+				table = table + '<table class="table">';
+				table = table + '<thead><tr><th>Email</th><th>Password</th>'
+				table = table + '<th>First Name</th><th>Last Name</th><th>Modify</th><th>Delete</th></thead>';
+				table = table + '<tbody>';
+				
+				
+				for (var i = 0; i < records.length; i++)
+				{
+					table = table + '<tr><td>' + records[i][0] +'</td><td>' + records[i][1].substr(0,16)+ '</td>';
+					table = table + '<td>' + records[i][2] +'</td><td>' + records[i][3] +'</td>';
+					table = table + '<td><a onclick="" class="modify btn">Modify</a></td>';
+					table = table + '<td><a onclick="" class="modify btn">Delete</a></td></tr>';
+				}
+				
+				table = table + '</tbody>';
+				table = table + '</table>';
+				
+				// Append our new html to this pages only 'thead' tag
+				$('adminspace').html(table);
+			});
+		}
+		
+		
+		function OrdeManagingTable(){
+			
+			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?order=id&page=1,10")
+
+			// The '.done' method fires when the get request completes
+			.done(function(data)
+			{
+				document.getElementsByTagName('adminspace')[0].innerHTML = "";
+				
+				// Pull the products out of our json object 
+				var records = data.products.records;
+
+				// Start an empty html string
+				table = "";
+				table = table + '<table class="table">';
+				table = table + '<thead><tr><th>ID</th><th>Book Name</th><th>Description</th>'
+				table = table + '<th>Price</th><th>Author</th><th>Publisher</th><th>Link</th><th>Amount</th><th>Modify</th><th>Delete</th></thead>';
+				table = table + '<tbody>';
+				
+				
+				for (var i = 0; i < records.length; i++)
+				{
+					table = table + '<tr><td>' + records[i][0] +'</td><td>' + records[i][1] +'</td><td>' + records[i][2].substr(0,16)+ '</td>';
+					table = table + '<td>' + records[i][3] +'</td><td>' + records[i][4] +'</td><td>' + records[i][5] +'</td>';
+					table = table + '<td>' + records[i][6] +'</td><td>' + records[i][7] +'</td>';
+					table = table + '<td><a onclick="" class="modify btn">Modify</a></td>';
+					table = table + '<td><a onclick="" class="modify btn">Delete</a></td></tr>';
+				}
+				
+				table = table + '</tbody>';
+				table = table + '</table>';
+				
+				// Append our new html to this pages only 'thead' tag
+				$('adminspace').html(table);
+			});
+		}
+		
+		
+		function AnnoManagingTable(){
+			
+			$.get("http://alliancedev.xyz/AllianceDev/api/api.php/products?order=id&page=1,10")
+
+			// The '.done' method fires when the get request completes
+			.done(function(data)
+			{
+				// Pull the products out of our json object 
+				var records = data.products.records;
+
+				// Start an empty html string
+				table = "";
+				table = table + '<table class="table">';
+				table = table + '<thead><tr><th>ID</th><th>Book Name</th><th>Description</th>'
+				table = table + '<th>Price</th><th>Author</th><th>Publisher</th><th>Link</th><th>Amount</th><th>Modify</th><th>Delete</th></thead>';
+				table = table + '<tbody>';
+				
+				
+				for (var i = 0; i < records.length; i++)
+				{
+					table = table + '<tr><td>' + records[i][0] +'</td><td>' + records[i][1] +'</td><td>' + records[i][2].substr(0,16)+ '</td>';
+					table = table + '<td>' + records[i][3] +'</td><td>' + records[i][4] +'</td><td>' + records[i][5] +'</td>';
+					table = table + '<td>' + records[i][6] +'</td><td>' + records[i][7] +'</td>';
+					table = table + '<td><a onclick="" class="modify btn">Modify</a></td>';
+					table = table + '<td><a onclick="" class="modify btn">Delete</a></td></tr>';
+				}
+				
+				table = table + '</tbody>';
+				table = table + '</table>';
+				
+				// Append our new html to this pages only 'thead' tag
+				$('adminspace').html(table);
+			});
+		}
+		
+		
 	/*	
 	 */
 	</script>

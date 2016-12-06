@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 session_start();
 if (isset($_SESSION['userSession']) != "")
 {
-    header("Location: home.php");
+    header("Location: index.php");
 }
 include_once 'dbconnect.php';
 // if(isset($_POST['btn-signup']))

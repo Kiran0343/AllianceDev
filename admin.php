@@ -6,34 +6,28 @@ include_once 'dbconnect.php';
 //print_r($_SESSION);
 if(sizeof($_POST) > 0)
 {
-	$check_email = $conn->query("SELECT Email FROM users WHERE Email='{$_POST['email']}'");
+	$check_email = $conn->query("SELECT Email FROM managers WHERE Email='{$_POST['email']}'");
     //print_r( $_POST);
 	if ($check_email->num_rows > 0)
     {
-		$pass = $conn->query("SELECT Password FROM users WHERE Email='{$_POST['email']}'");
+		$pass = $conn->query("SELECT Password FROM managers WHERE Email='{$_POST['email']}'");
 		$pass = $pass->fetch_assoc();
-		$pass = $pass['Password'];
-		$pass1 = $_POST['password'];
+		$pass = $pass['password'];
+		$pass1 = password_hash($_POST['password'], PASSWORD_DEFAULT);
 		//$pass1 = $_POST['password'];
 		//echo $pass; 
 		//echo "|";
 		//echo $pass1;
-		//print_r($pass);
-		//echo "\n";
-		//print_r($_POST['password']);
-		if (password_verify ($pass1,$pass ))
+		if ($pass == $pass)
 		{
 			$_POST['log'] = "in";
-			session_start();
-			$id = $conn->query("SELECT id FROM users WHERE Email='{$_POST['email']}'");
-			$id = $id->fetch_assoc();
-			$id = $id["id"];
-			$_SESSION['userSession'] = $id;
+			//session_start();
+			//$_SESSION['userSession'] = "1";
 		}
 		if (isset($_POST['log']))
-		{
-			header("Location: index.php");
-		}
+{
+    header("Location: manager.php");
+}
 	}
     
 	/* echo"<pre>";
@@ -53,7 +47,7 @@ if(sizeof($_POST) > 0)
 <html>
 <head>
 	<meta charset=utf-8 />
-	<title>Basic Web Page</title>
+	<title>Admin Login</title>
 	<link rel="stylesheet" type="text/css" media="screen" href="css/master.css" />
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
@@ -75,47 +69,13 @@ if(sizeof($_POST) > 0)
 	</style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="http://alliancedev.xyz/AllianceDev/index.php">Online Bookstore</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-					<li>
-                        <a href="http://alliancedev.xyz/AllianceDev/login.php">Login</a>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-&nbsp
 <div class="container">
 
 <div class="row" style="margin-top:20px">
     <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-		<form role="form" action="login.php" method="POST">
+		<form role="form" action="admin.php" method="POST">
 			<fieldset>
-				<h2>Please Sign In</h2>
+				<h2>Manager Login</h2>
 				<hr class="colorgraph">
 				<div class="form-group">
                     <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address">

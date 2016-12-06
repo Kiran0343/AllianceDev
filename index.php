@@ -21,7 +21,7 @@ $sid = session_id();
 	<![endif]-->
 	<style>
 
-        #pleaseWaitDialog {
+#pleaseWaitDialog {
             width: 400px;
             height: 50px;
             position: absolute;
@@ -120,14 +120,60 @@ $sid = session_id();
 	img{
 		margin: auto;
 	}
-        
+     
+	
+	
+	
+	
+	ul.dropdown-cart{
+    min-width:250px;
+}
+ul.dropdown-cart li .item{
+    display:block;
+    padding:3px 10px;
+    margin: 3px 0;
+}
+ul.dropdown-cart li .item:hover{
+    background-color:#f3f3f3;
+}
+ul.dropdown-cart li .item:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+ul.dropdown-cart li .item-left{
+    float:left;
+}
+ul.dropdown-cart li .item-left img,
+ul.dropdown-cart li .item-left span.item-info{
+    float:left;
+}
+ul.dropdown-cart li .item-left span.item-info{
+    margin-left:10px;   
+}
+ul.dropdown-cart li .item-left span.item-info span{
+    display:block;
+}
+ul.dropdown-cart li .item-right{
+    float:right;
+}
+ul.dropdown-cart li .item-right button{
+    margin-top:14px;
+}
+div.price-cart{
+	padding:12px
+}
 	</style>
+           
 </head>
 
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-default" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -142,10 +188,10 @@ $sid = session_id();
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-					<li>
+                    <li>
                         <a href="http://alliancedev.xyz/AllianceDev/login.php">Login</a>
                     </li>
-                    <li>
+					<li>
                         <a href="#">About</a>
                     </li>
                     <li>
@@ -155,11 +201,23 @@ $sid = session_id();
                         <a href="#">Contact</a>
                     </li>
                 </ul>
+				<ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> <cart-counter>0</cart-counter> - Items<span class="caret"></span></a>
+          <ul class="dropdown-menu dropdown-cart" role="menu">
+          <cart> 
+          </cart>              
+              <li class="divider"></li>
+              <li><a class="text-center" href="">View Cart</a></li>
+          </ul>
+        </li>
+      </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
+    
 
     <!-- Page Content -->
     <div class="container">
@@ -338,7 +396,7 @@ $sid = session_id();
 			{
                 //Start a new row for each product and put the product id in a data-element
                 item_box = item_box + '<div class="col-sm-4 col-lg-4 col-md-4">';
-				item_box = item_box + '<div class="thumbnail"><img src="' + records[i][6] + '250_.jpg" alt="">';
+				item_box = item_box + '<div class="thumbnail"><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'"><img src="' + records[i][6] + '250_.jpg"  alt=""></a>';
 
                 item_box = item_box + '<div class="caption"><h4 class="pull-right">$' + records[i][3]+'</h4>';
 				item_box = item_box + '<h4><a href="http://alliancedev.xyz/AllianceDev/index1.php?id=' + records[i][0] +'">' + records[i][1].substr(0,40) +'...</a></h4>';
